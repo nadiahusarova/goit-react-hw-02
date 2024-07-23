@@ -1,0 +1,23 @@
+.visual {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px ;
+}
+.btnStyles {
+  background-color: rgb(2, 75, 55);
+  border: 1px solid #645757;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+.btnStyles:hover {
+  background-color: rgb(4, 94, 70);
+}
+
+.btnStyles:focus {
+  border: 1px solid #868686;
+}
