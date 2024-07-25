@@ -7,13 +7,14 @@ import { Options } from './components/Options/Options';
 import { Notification } from './components/Notification/Notification';
 
 export default function App() {
-  const [clicked, setClicked] = useState({ good: 0, neutral: 0, bad: 0 });
-
+  const [clicked, setClicked] = useState(() => {
+    const savedClicked = localStorage.getItem('clicked');
+    return savedClicked ? JSON.parse(savedClicked) : { good: 0, neutral: 0, bad: 0 };
+  });
 
   const name = 'Sip Happens Café';
-  const paragraph =
-    'Please leave your feedback about our service by selecting one of the options below';
-  const message = 'Not feedback yet';
+  const paragraph = 'Please leave your feedback about our service by selecting one of the options below';
+  const message = 'No feedback yet';
   const totalFeedback = clicked.bad + clicked.good + clicked.neutral;
   const goodFeedback = Math.round((clicked.good / totalFeedback) * 100);
 
@@ -24,26 +25,37 @@ export default function App() {
     reset: 'Reset',
   };
 
-
   function handleOnClick(type) {
-    setClicked((prevState) => ({
-      ...prevState,
-      [type]: prevState[type] + 1,
-    }));
+    setClicked((prevState) => {
+      const newState = {
+        ...prevState,
+        [type]: prevState[type] + 1,
+      };
+      localStorage.setItem('clicked', JSON.stringify(newState));
+      return newState;
+    });
   }
 
   function handleReset() {
-    setClicked({ good: 0, neutral: 0, bad: 0 });
+    const resetState = { good: 0, neutral: 0, bad: 0 };
+    setClicked(resetState);
+    localStorage.setItem('clicked', JSON.stringify(resetState));
   }
 
   useEffect(() => {
-    console.log('customers clicked:',clicked);  
-  },[clicked])
- 
+    const savedClicked = localStorage.getItem('clicked');
+    if (savedClicked) {
+      setClicked(JSON.parse(savedClicked));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('clicked', JSON.stringify(clicked));
+  }, [clicked]);
 
   return (
     <section>
-      <Description name={name} paragraph={paragraph}/>
+      <Description name={name} paragraph={paragraph} />
       <Options
         valueOption={valueOption}
         handleReset={handleReset}
