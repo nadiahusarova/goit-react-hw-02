@@ -22,7 +22,6 @@ export default function App() {
     good: 'Good',
     neutral: 'Neutral',
     bad: 'Bad',
-    reset: 'Reset',
   };
 
   function handleOnClick(type) {
@@ -43,13 +42,6 @@ export default function App() {
   }
 
   useEffect(() => {
-    const savedClicked = localStorage.getItem('clicked');
-    if (savedClicked) {
-      setClicked(JSON.parse(savedClicked));
-    }
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem('clicked', JSON.stringify(clicked));
   }, [clicked]);
 
@@ -60,6 +52,7 @@ export default function App() {
         valueOption={valueOption}
         handleReset={handleReset}
         handleOnClick={handleOnClick}
+        totalFeedback={totalFeedback} 
       />
       {totalFeedback > 0 ? (
         <Feedback
