@@ -1,15 +1,15 @@
 import s from './Options.module.css';
 
 export const Options = ({ 
-  valueOption, 
+  labels, 
+  feedbackCounts, 
   handleReset, 
   handleOnClick 
 }) => {
   const options = [
-    { label: valueOption.good, onClick: () => handleOnClick('good') },
-    { label: valueOption.neutral, onClick: () => handleOnClick('neutral') },
-    { label: valueOption.bad, onClick: () => handleOnClick('bad') },
-    { label: valueOption.reset, onClick: handleReset }
+    { label: labels.good, onClick: () => handleOnClick('good') },
+    { label: labels.neutral, onClick: () => handleOnClick('neutral') },
+    { label: labels.bad, onClick: () => handleOnClick('bad') },
   ];
 
   return (
@@ -25,6 +25,17 @@ export const Options = ({
           </button>
         </li>
       ))}
+      {feedbackCounts.good + feedbackCounts.neutral + feedbackCounts.bad > 0 && (
+        <li>
+          <button
+            className={s.btnStyles}
+            onClick={handleReset}
+            type="button"
+          >
+            {labels.reset}
+          </button>
+        </li>
+      )}
     </ul>
   );
 };
