@@ -16,12 +16,13 @@ export default function App() {
   const paragraph = 'Please leave your feedback about our service by selecting one of the options below';
   const message = 'No feedback yet';
   const totalFeedback = clicked.bad + clicked.good + clicked.neutral;
-  const goodFeedback = Math.round((clicked.good / totalFeedback) * 100);
+  const goodFeedback = totalFeedback > 0 ? Math.round((clicked.good / totalFeedback) * 100) : 0;
 
   const valueOption = {
     good: 'Good',
     neutral: 'Neutral',
     bad: 'Bad',
+    reset: 'Reset',
   };
 
   function handleOnClick(type) {
@@ -30,7 +31,6 @@ export default function App() {
         ...prevState,
         [type]: prevState[type] + 1,
       };
-      localStorage.setItem('clicked', JSON.stringify(newState));
       return newState;
     });
   }
@@ -38,7 +38,6 @@ export default function App() {
   function handleReset() {
     const resetState = { good: 0, neutral: 0, bad: 0 };
     setClicked(resetState);
-    localStorage.setItem('clicked', JSON.stringify(resetState));
   }
 
   useEffect(() => {

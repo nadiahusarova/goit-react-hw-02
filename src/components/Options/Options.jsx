@@ -3,7 +3,7 @@ import s from './Options.module.css';
 export const Options = ({ 
   valueOption, 
   handleReset, 
-  handleOnClick,
+  handleOnClick, 
   totalFeedback 
 }) => {
   const options = [
@@ -32,7 +32,7 @@ export const Options = ({
             onClick={handleReset}
             type="button"
           >
-            Reset
+            {valueOption.reset}
           </button>
         </li>
       )}
